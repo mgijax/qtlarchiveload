@@ -92,6 +92,7 @@ fi
 # createArchive including OUTPUTDIR, startLog, getConfigEnv
 # sets "JOBKEY"
 preload ${OUTPUTDIR}
+cleanDir ${OUTPUTDIR} ${LOGDIR}
 
 #
 # run association load
