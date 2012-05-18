@@ -87,12 +87,17 @@ fi
 # Main
 #
 #####################################
+# remove logs (if not assocload logs will be appended)
+cleanDir ${LOGDIR}
 
 #
 # createArchive including OUTPUTDIR, startLog, getConfigEnv
 # sets "JOBKEY"
+
 preload ${OUTPUTDIR}
-cleanDir ${OUTPUTDIR} ${LOGDIR}
+
+# remove files from output directory
+cleanDir ${OUTPUTDIR}
 
 #
 # run association load
