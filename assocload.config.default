@@ -25,14 +25,14 @@ export ASSOCLOADER_SH
 ###########################################################################
 
 #  Path name of the archive, logs, reports and output directories
-FILEDIR=/data/loads/mgi/qtlarchiveload
+FILEDIR=${DATALOADSOUTPUT}/mgi/qtlarchiveload
 ARCHIVEDIR=${FILEDIR}/archive
 LOGDIR=${FILEDIR}/logs
 RPTDIR=${FILEDIR}/reports
 OUTPUTDIR=${FILEDIR}/output
 
 #  Complete path name of the input file
-INPUTDIR=/data/loads/mgi/qtlarchiveload/input
+INPUTDIR=${DATALOADSOUTPUT}/mgi/qtlarchiveload/input
 INFILE_NAME=${INPUTDIR}/qtlarchiveload_assoc.txt
 
 #  Complete path name of the log files
