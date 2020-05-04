@@ -4,7 +4,8 @@
 # Installation script
 #
 # 1) cp qtlarchiveload.config.default qtlarchiveload.config
-# 2) Install 
+# 2) cp qtlsanitycheck.config.default qtlsanitycheck.config
+# 3) Install 
 #
 
 Usage=Install
@@ -66,3 +67,37 @@ if [ ! -d ${INPUTDIR} ]
 then
     mkdir -p ${INPUTDIR}
 fi
+
+#
+# copy the curator scripts into a standard location 
+# trim any trailing slash from MGIBIN variable
+#
+DEPLOY_PATH=`echo "${MGIBIN}" | sed 's./$..'`
+
+if [ -d ${DEPLOY_PATH} ]; then
+        # copy files, change permissions, and check for errors
+        # deployment errors are non-fatal, as they can occur regularly in an
+        # SE's development area
+
+        for file in runQtlQC publishQtl
+        do
+                cp bin/${file} ${DEPLOY_PATH}
+                if [ $? -ne 0 ]; then
+                        echo "Warning: Failed to copy ${file} to ${DEPLOY_PATH}"
+                fi
+
+                chmod 755 ${DEPLOY_PATH}/${file}
+                if [ $? -ne 0 ]; then
+                        echo "Warning: Failed to change permissions on ${DEPLOY_PATH}/${file}"
+                fi
+        done
+        echo "Deployed curator files to ${DEPLOY_PATH}"
+fi
+
+#
+# re-set permissions
+#
+chmod -f 775 ${FILEDIR}/*
+chgrp mgi ${FILEDIR}/*
+chmod 755 ${QTLARCHIVELOAD}/bin/qtlarchiveload.sh
+

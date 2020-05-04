@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+#  runQtlQC
+###########################################################################
+#
+# A copy of this script is intended to reside in /usr/local/bin on all
+# servers to make it available in the common PATH.
+#
+###########################################################################
+
+if [ -z ${MGICONFIG} ]
+then
+        MGICONFIG=/usr/local/mgi/live/mgiconfig
+	export MGICONFIG
+fi
+
+. ${MGICONFIG}/master.config.sh
+
+usage ()
+{
+    echo "Usage: runQtlQC input_file"
+    echo "       where"
+    echo "           input_file = path to the qtl input file"
+    exit 1
+}
+
+#
+# The qtlarchiveload product is not installed on all servers, so make sure
+# it exists on this one.
+#
+if [ ! -d ${QTLARCHIVELOAD} ]
+then
+    echo "The qtlarchiveload software does not exist on this server"; exit 1
+fi
+
+#
+# Make sure an input file was passed as an argument to the script.
+#
+if [ $# -eq 1 ]
+then
+    if [ ! -r $1 ]
+    then
+        echo "Input file does not exist: $1"; exit 1
+    fi
+else
+    usage
+fi
+
+#
+# Invoke the qtlarchiveload using the santiy check configuration file
+# and the arguments that were passed to this script.
+#
+${QTLARCHIVELOAD}/bin/qtlarchiveload.sh ${QTLARCHIVELOAD}/qtlsanitycheck.config $*
+

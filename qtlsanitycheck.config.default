@@ -1,0 +1,70 @@
+#!/bin/sh
+
+#
+# default configuration file
+#
+# cp config.default *.config
+# set all settings where default value is '?'
+
+if [ "${MGICONFIG}" = "" ]
+then
+        MGICONFIG=/usr/local/mgi/live/mgiconfig
+	export MGICONFIG
+fi
+
+. ${MGICONFIG}/master.config.sh
+
+#  Path name of the archive, logs, reports and output directories
+FILEDIR=${DATALOADSOUTPUT}/mgi/qtlarchiveload
+ARCHIVEDIR=${FILEDIR}/archive
+LOGDIR=${FILEDIR}/logs
+RPTDIR=${FILEDIR}/reports
+OUTPUTDIR=${FILEDIR}/output
+INPUTDIR=${FILEDIR}/input
+export FILEDIR ARCHIVEDIR LOGDIR RPTDIR OUTPUTDIR INPUTDIR
+
+# destination area for curator sanity checks
+DESTFILEDIR=/data/qtlarchive
+DESTCURRENTDIR=${DESTFILEDIR}/current
+export DESTFILEDIR DESTCURRENTDIR
+
+# Complete path name of the qtlarchiveload log files
+LOG_FILE=${LOGDIR}/qtlarchiveload.log
+LOG_PROC=${LOGDIR}/qtlarchiveload.proc.log
+LOG_DIAG=${LOGDIR}/qtlarchiveload.diag.log
+LOG_CUR=${LOGDIR}/qtlarchiveload.cur.log
+LOG_VAL=${LOGDIR}/qtlarchiveload.val.log
+LOG_ERROR=${LOGDIR}/qtlarchiveload.error.log
+
+export LOG_FILE LOG_PROC LOG_DIAG LOG_CUR LOG_VAL LOG_ERROR
+
+# Full path to the default input file.
+# This is where the publish script places the file
+INPUT_FILE_NAME=qtlarchiveload.txt
+INPUT_FILE_DEFAULT=${DESTCURRENTDIR}/${INPUT_FILE_NAME}
+export INPUT_FILE_DEFAULT
+
+# 'load' - load tables
+# 'preview' - perform all record verifications, create all output files
+#   but do not load the data or make any changes to the database.
+QTLMODE=preview
+export QTLMODE
+
+###########################################################################
+#
+#  MISCELLANEOUS SETTINGS
+#
+###########################################################################
+
+#  The name of the load for the subject of an email notification
+MAIL_LOADNAME="QTL Archive Load"
+export MAIL_LOADNAME
+
+#  Recipient list for mailing the log files (comma-separated)
+#MAIL_LOG_PROC="${USER},Jill.Recla@jax.org"
+MAIL_LOG_PROC="${USER}"
+export MAIL_LOG_PROC
+
+INSTALLDIR=${QTLARCHIVELOAD}
+export INSTALLDIR
+
