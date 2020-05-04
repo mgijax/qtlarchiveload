@@ -40,7 +40,7 @@ export LOG_FILE LOG_PROC LOG_DIAG LOG_CUR LOG_VAL LOG_ERROR
 
 # Full path to the default input file.
 # This is where the publish script places the file
-INPUT_FILE_NAME=qtlarchiveload.txt
+INPUT_FILE_NAME=qtlarchiveload_assoc.txt
 INPUT_FILE_DEFAULT=${DESTCURRENTDIR}/${INPUT_FILE_NAME}
 export INPUT_FILE_DEFAULT
 
