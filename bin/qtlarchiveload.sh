@@ -99,13 +99,6 @@ fi
 #
 #####################################
 
-if [ ${QTLMODE} != "preview" ]
-then
-    cleanDir ${LOGDIR}
-    preload ${OUTPUTDIR}
-    cleanDir ${OUTPUTDIR}
-fi
-
 #
 # There should be a "lastrun" file in the input directory that was created
 # the last time the load was run for this input file. If this file exists
@@ -125,6 +118,13 @@ then
     fi
 fi
 
+if [ ${QTLMODE} != "preview" ]
+then
+    cleanDir ${LOGDIR}
+    preload ${OUTPUTDIR}
+    cleanDir ${OUTPUTDIR}
+fi
+
 #
 # Convert the input file into a QC-ready version that can be used to run the sanity/QC reports against.
 #
@@ -135,6 +135,7 @@ dos2unix ${INPUT_FILE_DEFAULT} ${INPUT_FILE_DEFAULT} 2>/dev/null
 #
 date | tee -a ${LOG_FILE}
 echo "Running qtlarchiveload : ${QTLMODE}" | tee -a ${LOG_FILE}
+echo "Running QTL Archive sanity check" >> ${LOG_DIAG}
 ${PYTHON} ${QTLARCHIVELOAD}/bin/qtlarchiveload.py | tee -a ${LOG_DIAG}
 STAT=$?
 checkStatus ${STAT} "${QTLARCHIVELOAD} ${CONFIG_FILE} : ${QTLMODE} :"
@@ -142,11 +143,11 @@ checkStatus ${STAT} "${QTLARCHIVELOAD} ${CONFIG_FILE} : ${QTLMODE} :"
 #
 # run association load
 #
-#echo "Running qtlarchiveload : ${QTLMODE}" | tee -a ${LOG_FILE}
-#echo "Running QTL Archive association load" >> ${LOG_DIAG}
-#${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config ${JOBKEY}
-#STAT=$?
-#checkStatus ${STAT} "${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config"
+echo "Running qtlarchiveload : ${QTLMODE}" | tee -a ${LOG_FILE}
+echo "Running QTL Archive association load" >> ${LOG_DIAG}
+${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config ${JOBKEY}
+STAT=$?
+checkStatus ${STAT} "${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config"
 
 #
 # set permissions

@@ -31,7 +31,7 @@ CONFIG=${QTLARCHIVELOAD}/qtlsanitycheck.config
 INPUT_FILE=$1
 
 #
-# The qtlload product is not installed on all servers, so make sure
+# The product is not installed on all servers, so make sure
 # it exists on this one.
 #
 if [ ! -d ${QTLARCHIVELOAD} ]
