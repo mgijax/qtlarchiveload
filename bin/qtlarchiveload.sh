@@ -143,11 +143,14 @@ checkStatus ${STAT} "${QTLARCHIVELOAD} ${CONFIG_FILE} : ${QTLMODE} :"
 #
 # run association load
 #
+if [ ${QTLMODE} != "preview" ]
+then
 echo "Running qtlarchiveload : ${QTLMODE}" | tee -a ${LOG_FILE}
 echo "Running QTL Archive association load" >> ${LOG_DIAG}
 ${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config ${JOBKEY}
 STAT=$?
 checkStatus ${STAT} "${ASSOCLOADER_SH} ${QTLARCHIVELOAD}/assocload.config"
+fi
 
 #
 # set permissions
